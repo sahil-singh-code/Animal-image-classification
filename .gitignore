@@ -1,0 +1,10 @@
+
+# Dataset
+animals 10 dataset/
+raw-img/
+*.zip
+
+# Python
+__pycache__/
+.ipynb_checkpoints/
+.env
