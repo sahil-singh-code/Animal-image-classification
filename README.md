@@ -2,23 +2,26 @@
 
 ## Overview
 
-An image-classification project that identifies animals across 10 categories using a custom Convolutional Neural Network (CNN). A Random Forest classifier is used as a baseline for performance comparison.
+This project classifies animal images into 10 categories using a custom Convolutional Neural Network (CNN). A Random Forest classifier serves as a baseline to compare traditional machine learning with deep learning for image classification.
 
 ## Dataset
 
-- Dataset: Animals-10
-- Total images: 26,179
-- Classes: Dog, Horse, Elephant, Butterfly, Chicken, Cat, Cow, Sheep, Spider, and Squirrel
-- Split: 70% training, 15% validation, 15% testing
+- **Dataset:** Animals-10
+- **Total images:** 26,179
+- **Number of classes:** 10
+- **Classes:** Butterfly, Cat, Chicken, Cow, Dog, Elephant, Horse, Sheep, Spider, and Squirrel
+- **Data split:** 70% training, 15% validation, 15% testing
 
 ## Methodology
 
-1. Explored image classes and class distribution.
-2. Resized CNN inputs to 128 × 128 RGB images and normalized pixel values to [0, 1].
-3. Trained a Random Forest baseline using flattened 32 × 32 images.
-4. Built a CNN with Conv2D, MaxPooling2D, Dense layers, and Dropout.
-5. Used validation data and Early Stopping to monitor training.
-6. Evaluated performance using test accuracy, macro F1-score, classification reports, and confusion matrices.
+1. Explored the dataset, image classes, and class distribution.
+2. Split the dataset into training, validation, and test sets using stratified sampling.
+3. Built a Random Forest baseline using flattened 32 × 32 RGB images.
+4. Developed a CNN using 128 × 128 RGB images, convolutional layers, max pooling, fully connected layers, and dropout.
+5. Used the Adam optimizer, categorical probability outputs, and early stopping based on validation loss.
+6. Evaluated both models using test accuracy and macro F1-score.
+7. Generated a classification report, normalized confusion matrix, and training accuracy/loss curves.
+8. Saved the trained CNN, class-name mapping, and evaluation outputs.
 
 ## Results
 
@@ -27,25 +30,64 @@ An image-classification project that identifies animals across 10 categories usi
 | Random Forest | 41.58% | 34.63% |
 | Custom CNN | 64.86% | 60.49% |
 
-The CNN improved test accuracy by 23.27 percentage points over the Random Forest baseline.
+The CNN achieved a **23.28 percentage-point improvement** in test accuracy over the Random Forest baseline, based on the displayed rounded accuracy values.
 
-Note: The models use different input resolutions, so this is a practical baseline comparison rather than a controlled resolution-matched experiment.
+The models use different input resolutions, so this comparison represents a practical baseline rather than a resolution-matched experiment.
+
+## Visualizations
+
+### CNN Normalized Confusion Matrix
+
+The confusion matrix shows the proportion of predictions for each true animal class, helping identify which classes the model distinguishes well and which it confuses.
+
+### CNN Training Curves
+
+The training curves show training and validation accuracy and loss across epochs. The widening accuracy gap and rising validation loss toward the end suggest some overfitting.
 
 ## Technologies
 
-Python, TensorFlow, Keras, NumPy, Pandas, Matplotlib, Scikit-learn, Pillow.
+- Python
+- TensorFlow and Keras
+- NumPy and Pandas
+- Matplotlib
+- Scikit-learn
+- Pillow
 
 ## Project Structure
 
-- `01_data_exploration.ipynb` — data exploration, preprocessing, model training, and evaluation.
-- `models/` — saved CNN and class-name mapping.
-- `results/` — model comparison, classification report, confusion matrix, and training curves.
+```text
+animal-image-classification/
+├── project.ipynb
+├── requirements.txt
+├── README.md
+├── .gitignore
+├── models/
+│   ├── animal_cnn.keras
+│   └── class_names.json
+└── results/
+    ├── cnn_classification_report.csv
+    ├── cnn_confusion_matrix.png
+    ├── cnn_training_curves.png
+    └── model_comparison.csv
+```
+
+The dataset is excluded from the repository because of its size.
 
 ## How to Run
 
-1. Install the dependencies listed in `requirements.txt`.
-2. Download the Animals-10 dataset and extract its class folders.
-3. Update the dataset path in the notebook.
-4. Run the notebook cells in order.
+1. Clone or download this repository.
+2. Install the required packages:
 
-The reported metrics are from the current experiment and may vary if the data split, preprocessing, or training configuration changes.
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Download and extract the Animals-10 dataset into the appropriate local directory.
+4. Update `DATA_DIR` in `project.ipynb` to point to your dataset's `raw-img` directory.
+5. Run the notebook cells in order to reproduce preprocessing, training, and evaluation.
+
+For prediction using the saved model, load `models/animal_cnn.keras` and read the corresponding class order from `models/class_names.json`. Retraining is not necessary for ordinary inference.
+
+## Notes
+
+The reported metrics correspond to the current experiment and may vary with changes to the data split, preprocessing, or training configuration.
